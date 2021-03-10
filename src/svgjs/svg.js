@@ -2477,6 +2477,9 @@
         const fill = SVG.Gradient.prototype.fill;
         const url = fill.apply(this, args);
         const prefix = `url(${document.location.href}`;
+        console.log('fill:', fill)
+        console.log('url:', url)
+        console.log('prefix:', prefix)
 
         if (!url.startsWith(prefix)) {
           return url.split('url(').join(prefix);
@@ -2570,7 +2573,18 @@
     extend: {
     // Return the fill id
       fill: function () {
-        return 'url(#' + this.id() + ')'
+        const fill = SVG.Gradient.prototype.fill;
+        const url = fill.apply(this, args);
+        const prefix = `url(${document.location.href}`;
+        console.log('fill 2:', fill)
+        console.log('url 2:', url)
+        console.log('prefix 2:', prefix)
+
+        if (!url.startsWith(prefix)) {
+          return url.split('url(').join(prefix);
+        } else {
+          return 'url(#' + this.id() + ')'
+        }
       },
       // Update pattern by rebuilding
       update: function (block) {
