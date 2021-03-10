@@ -2474,7 +2474,15 @@
       },
       // Return the fill id
       fill: function () {
-        return 'url(#' + this.id() + ')'
+        const fill = SVG.Gradient.prototype.fill;
+        const url = fill.apply(this, args);
+        const prefix = `url(${document.location.href}`;
+
+        if (!url.startsWith(prefix)) {
+          return url.split('url(').join(prefix);
+        } else {
+          return 'url(#' + this.id() + ')'
+        }
       },
       // Alias string convertion to fill
       toString: function () {
